@@ -24,7 +24,7 @@ aiRouter.post("/generate-image", optionalAuthMiddleware, async (c) => {
       return c.json({ error: "Failed to generate image from AI bridge" }, 500);
     }
 
-    const imgData = await imgRes.json();
+    const imgData = await imgRes.json() as any;
     if (!imgData.image_base64) {
       return c.json({ error: "No image data returned" }, 500);
     }

@@ -1,6 +1,6 @@
 import { desc, eq, isNull, ne, sql } from "drizzle-orm";
 import { db } from "../db/index.js";
-import { likes, posts, users, votes } from "../db/schema.js";
+import { posts, users, votes } from "../db/schema.js";
 import { generateAIResponse } from "../lib/ai.js";
 import fs from "fs";
 
@@ -81,7 +81,7 @@ async function actionCreatePost() {
       });
       
       if (imgRes.ok) {
-        const imgData = await imgRes.json();
+        const imgData = await imgRes.json() as any;
         if (imgData.image_base64) {
           // Save the base64 string to a local file
           const fs = await import("fs");
@@ -242,7 +242,7 @@ async function actionProcessWebAgentRequests() {
       LIMIT 1
     `);
 
-    const rows = pendingRequests.rows || pendingRequests; // Handle different drizzle driver returns
+    const rows = (pendingRequests as any).rows || pendingRequests; // Handle different drizzle driver returns
     if (rows && rows.length > 0) {
       const targetPost = rows[0] as any;
       const contentStr = targetPost.content || "";

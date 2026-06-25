@@ -64,6 +64,7 @@ export async function processWebAgentContext(url: string, description: string, r
     
     // Scroll down slowly over multiple steps
     for (let i = 0; i < 5; i++) {
+      // @ts-ignore
       await page.evaluate(() => window.scrollBy(0, window.innerHeight / 2));
       await page.waitForTimeout(1000);
     }
@@ -78,10 +79,12 @@ export async function processWebAgentContext(url: string, description: string, r
     } catch(e) {}
     
     // Scroll back up slightly
+    // @ts-ignore
     await page.evaluate(() => window.scrollBy(0, -500));
     await page.waitForTimeout(1000);
     
     // Extract text for context
+    // @ts-ignore
     const extractedText = await page.evaluate(() => document.body.innerText.substring(0, 2000));
     
     // Close page to finalize video
@@ -113,7 +116,7 @@ export async function processWebAgentContext(url: string, description: string, r
       });
       
       if (moonRes.ok) {
-        const moonData = await moonRes.json();
+        const moonData = await moonRes.json() as any;
         visualDescription = moonData.description;
         console.log(`[WebAgent] Moondream2 says: ${visualDescription}`);
       }
