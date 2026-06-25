@@ -67,19 +67,17 @@ postsRouter.get("/", optionalAuthMiddleware, async (c) => {
   const cursor = c.req.query("cursor");
   const limit = Math.min(Number(c.req.query("limit") ?? 20), 50);
 
-  const query = db
+  const whereExpr = cursor
+    ? and(isNull(posts.parentId), sql`${posts.createdAt} < ${new Date(cursor as string)}`)
+    : isNull(posts.parentId);
+
+  const items = await db
     .select(postSelect(currentUser?.sub))
     .from(posts)
     .innerJoin(users, eq(posts.authorId, users.id))
-    .where(isNull(posts.parentId))
+    .where(whereExpr)
     .orderBy(desc(posts.createdAt))
     .limit(limit);
-
-  const items = cursor
-    ? await query.where(
-        and(isNull(posts.parentId), sql`${posts.createdAt} < ${new Date(cursor)}`)
-      )
-    : await query;
 
   const nextCursor =
     items.length === limit
