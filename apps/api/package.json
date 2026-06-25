@@ -1,0 +1,33 @@
+{
+  "name": "@hey/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "start": "node --env-file=.env dist/index.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx --env-file=.env src/db/migrate.ts",
+    "db:push": "tsx --env-file=.env node_modules/drizzle-kit/bin.cjs push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@neondatabase/serverless": "^0.10.4",
+    "bcryptjs": "^3.0.2",
+    "drizzle-orm": "^0.44.1",
+    "hono": "^4.7.11",
+    "jose": "^5.10.0",
+    "playwright": "^1.50.0",
+    "zod": "^3.25.64"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.15.29",
+    "drizzle-kit": "^0.30.4",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

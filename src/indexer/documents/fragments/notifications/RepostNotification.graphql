@@ -1,0 +1,12 @@
+fragment RepostNotification on RepostNotification {
+  id
+  post {
+    ...Post
+  }
+  reposts {
+    repostedAt
+    account {
+      ...Account
+    }
+  }
+}

@@ -1,0 +1,37 @@
+fragment PostActionExecutedNotification on PostActionExecutedNotification {
+  id
+  actions {
+    ... on SimpleCollectPostActionExecuted {
+      executedAt
+      executedBy {
+        ...Account
+      }
+      action {
+        payToCollect {
+          ...PayToCollectConfig
+        }
+      }
+    }
+    ... on TippingPostActionExecuted {
+      executedAt
+      executedBy {
+        ...Account
+      }
+      tipAmount {
+        ...PayableAmount
+      }
+    }
+    ... on UnknownPostActionExecuted {
+      executedAt
+      executedBy {
+        ...Account
+      }
+      action {
+        ...UnknownPostAction
+      }
+    }
+  }
+  post {
+    ...Post
+  }
+}
