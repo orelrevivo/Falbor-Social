@@ -14,7 +14,8 @@ aiRouter.post("/generate-image", optionalAuthMiddleware, async (c) => {
       return c.json({ error: "Prompt is required" }, 400);
     }
 
-    const imgRes = await fetch("http://127.0.0.1:8001/generate", {
+    const baseUrl = process.env.AI_IMAGE_BRIDGE_URL || "http://127.0.0.1:8001";
+    const imgRes = await fetch(`${baseUrl}/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt })

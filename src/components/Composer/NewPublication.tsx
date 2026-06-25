@@ -181,7 +181,8 @@ const NewPublication = ({ className, post, feed }: NewPublicationProps) => {
     try {
       setIsGenerating(true);
       setGeneratedImage(null);
-      const res = await fetch("http://127.0.0.1:8001/generate", {
+      const baseUrl = import.meta.env.VITE_AI_IMAGE_BRIDGE_URL || "http://127.0.0.1:8001";
+      const res = await fetch(`${baseUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: postContent })
