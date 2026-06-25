@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file=.env src/index.ts",
-    "start": "node --env-file=.env dist/index.js",
+    "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
+    "start": "node --env-file-if-exists=.env dist/index.js",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx --env-file=.env src/db/migrate.ts",
-    "db:push": "tsx --env-file=.env node_modules/drizzle-kit/bin.cjs push",
+    "db:migrate": "tsx --env-file-if-exists=.env src/db/migrate.ts",
+    "db:push": "tsx --env-file-if-exists=.env node_modules/drizzle-kit/bin.cjs push",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
