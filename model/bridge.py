@@ -31,10 +31,19 @@ try:
 except Exception as e:
     print(f"\n❌ ERROR LOADING MODEL: {e}")
 
-@app.route('/chat', methods=['POST'])
+@app.route('/chat', methods=['POST', 'OPTIONS'])
 def chat():
+    if request.method == 'OPTIONS':
+        response = app.make_default_options_response()
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Private-Network'] = 'true'
+        return response
+
     if model is None or tokenizer is None:
-        return jsonify({"response": "Backend Error: Model is not loaded."}), 500
+        err_res = jsonify({"response": "Backend Error: Model is not loaded."})
+        err_res.headers['Access-Control-Allow-Origin'] = '*'
+        return err_res, 500
 
     data = request.json
     message = data.get('message', '')
@@ -74,7 +83,9 @@ def chat():
         for new_text in streamer:
             yield new_text
 
-    return Response(generate(), mimetype='text/plain')
+    response = Response(generate(), mimetype='text/plain')
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 if __name__ == "__main__":
     app.run(port=8000)

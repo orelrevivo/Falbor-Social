@@ -33,6 +33,7 @@ def generate():
         response = app.make_default_options_response()
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Private-Network'] = 'true'
         return response
 
     if pipe is None:
