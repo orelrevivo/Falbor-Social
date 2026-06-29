@@ -71,7 +71,7 @@
     "vite": "^7.3.3",
     "wagmi": "^2.19.5",
     "zod": "4.1.11",
-    "zustand": "^5.0.10"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^6.3.1",
